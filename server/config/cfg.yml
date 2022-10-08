@@ -1,0 +1,5 @@
+host: localhost
+port: 8000
+exchange_rate: https://open.er-api.com/v6/latest/RUB
+timeout_conn_psql: 5s
+connection_psql: postgres://postgres:postgrespw@localhost:55000/micro_balance

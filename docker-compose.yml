@@ -1,0 +1,16 @@
+volumes:
+  data:
+
+services:
+  postgres:
+    image: tmpsql:latest
+    environment:
+      - POSTGRES_PASSWORD=postgrespw
+    ports:
+      - 5432:5432
+    volumes:
+      - data:/var/lib/postgresql
+  myapp:
+    image: taskmngr:latest
+    ports:
+      - 8000:8000
