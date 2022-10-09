@@ -26,6 +26,14 @@ func (t *TaskLocalStorage) CreateTask(user *models.User, tsk *models.Task) error
 	if _, exists := t.tasks[tsk.ID]; exists {
 		return ErrTaskAlreadyExists
 	}
+
+	if tsk.Status != "todo" &&
+		tsk.Status != "in progress" &&
+		tsk.Status != "done" &&
+		tsk.Status != "" {
+		return ErrInvalidStatus
+	}
+
 	t.tasks[tsk.ID] = tsk
 	return nil
 }

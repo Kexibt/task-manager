@@ -47,8 +47,8 @@ func (r *Repository) CreateUser(user *models.User) error {
 	return r.users.CreateUser(user)
 }
 
-func (r *Repository) CheckUser(username, password string) (bool, error) {
+func (r *Repository) CheckUser(user *models.User) (bool, error) {
 	h := sha256.New()
-	hashpass := hex.EncodeToString(h.Sum([]byte(password)))
-	return r.users.CheckUser(username, hashpass)
+	hashpass := hex.EncodeToString(h.Sum([]byte(user.Password)))
+	return r.users.CheckUser(user.Login, hashpass)
 }
