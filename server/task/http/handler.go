@@ -147,7 +147,16 @@ func (c *Handler) GetTasksAfter(w http.ResponseWriter, r *http.Request, user *mo
 		return
 	}
 
-	// t, err := time.Parse(time.Local.String(), input.Date)
+	// loc := time.FixedZone("UTC-8", 3*60*60) // todo переделать
+	// if err != nil {
+	// 	err = sendErr(w, err)
+	// 	if err != nil {
+	// 		log.Println(err)
+	// 	}
+	// 	return
+	// }
+
+	// t, err := time.ParseInLocation(time.R, input.Date, loc)
 	// if err != nil {
 	// 	err = sendErr(w, err)
 	// 	if err != nil {
