@@ -34,7 +34,9 @@ func (t *TaskLocalStorage) CreateTask(user *models.User, tsk *models.Task) error
 		return ErrInvalidStatus
 	}
 
-	t.tasks[tsk.ID] = tsk
+	tsk.UpdateDate = time.Now()
+
+	t.tasks[tsk.ID] = copyTask(tsk)
 	return nil
 }
 

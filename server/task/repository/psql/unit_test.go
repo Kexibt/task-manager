@@ -57,10 +57,7 @@ func TestGet(t *testing.T) {
 	err = db.CreateTask(us, tsk)
 	assert.NoError(t, err)
 
-	t.Log("created\n")
-
 	res, err := db.GetTask(us, tsk.ID)
-	t.Log("got\n")
 	assert.NoError(t, err)
 	assert.Equal(t, tsk.Title, res.Title)
 	assert.Equal(t, tsk.Description, res.Description)
