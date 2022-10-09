@@ -6,7 +6,6 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"strconv"
 	"task_manager/models"
 	"task_manager/task"
 	"time"
@@ -198,7 +197,6 @@ func NewTaskOutput(tsk *models.Task) *TaskOutput {
 
 func sendBytes(w http.ResponseWriter, b []byte) error {
 	w.Header().Add("Content-Type", "application/json")
-	w.Header().Add("Status", strconv.Itoa(http.StatusOK))
 	_, err := w.Write(b)
 	if err != nil {
 		return err
