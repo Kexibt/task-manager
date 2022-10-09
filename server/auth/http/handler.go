@@ -5,7 +5,6 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"strconv"
 	"task_manager/models"
 )
 
@@ -107,7 +106,6 @@ func sendResult(w http.ResponseWriter, msg string) error {
 	}
 
 	w.Header().Add("Content-Type", "application/json")
-	w.Header().Add("Status", strconv.Itoa(http.StatusOK))
 	_, err = w.Write(b)
 	if err != nil {
 		return err
@@ -130,7 +128,7 @@ func sendErr(w http.ResponseWriter, err error) error {
 	}
 
 	w.Header().Add("Content-Type", "application/json")
-	w.Header().Add("Status", strconv.Itoa(http.StatusOK))
+	w.WriteHeader(http.StatusBadRequest)
 	_, err = w.Write(b)
 	if err != nil {
 		return err
