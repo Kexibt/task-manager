@@ -20,4 +20,5 @@ psql -v ON_ERROR_STOP=1 --username "postgres" --dbname "postgres" <<-EOSQL
       		FOREIGN KEY(user_id)
 	  		REFERENCES public.users(login)
 	  );
+	INSERT INTO public.users ("login", "hashpass") VALUES ('test', '1234');
 EOSQL

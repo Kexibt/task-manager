@@ -6,7 +6,5 @@ COPY . /app
 WORKDIR /app
 RUN go mod download
 
-EXPOSE 8000
-
-RUN go build -o task_manager cmd/api/main.go
-CMD [ "./taskmanager" ]
+RUN go build -o task_manager .
+CMD [ "./task_manager" ]

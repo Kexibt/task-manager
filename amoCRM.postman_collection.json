@@ -1,0 +1,259 @@
+{
+	"info": {
+		"_postman_id": "f9721dd9-aa1f-4ec3-8717-71c4bb0ad94b",
+		"name": "amoCRM",
+		"description": "Ниже приведены примеры запросов к сервису. В переменных находятся хост, порт, логин и пароль тестового пользователя",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13647938"
+	},
+	"item": [
+		{
+			"name": "sign up",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"login\": {{test_login}},\n    \"password\": {{test_pass}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostport}}/sign_up",
+					"host": [
+						"{{hostport}}"
+					],
+					"path": [
+						"sign_up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sign in",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"login\": {{test_login}},\n    \"password\": {{test_pass}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostport}}/sign_in",
+					"host": [
+						"{{hostport}}"
+					],
+					"path": [
+						"sign_in"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create task",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\" : \"title\",\n    \"description\" : \"description\",\n    \"status\" : \"todo\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostport}}/create_task",
+					"host": [
+						"{{hostport}}"
+					],
+					"path": [
+						"create_task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit task",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\" : 151,\n    \"title\": \"changed t\",\n    \"status\": \"in t\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostport}}/edit_task",
+					"host": [
+						"{{hostport}}"
+					],
+					"path": [
+						"edit_task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete task",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\" : 149\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostport}}/delete_task",
+					"host": [
+						"{{hostport}}"
+					],
+					"path": [
+						"delete_task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get task",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\" : 151\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostport}}/get_task",
+					"host": [
+						"{{hostport}}"
+					],
+					"path": [
+						"get_task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get tasks",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostport}}/get_tasks",
+					"host": [
+						"{{hostport}}"
+					],
+					"path": [
+						"get_tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get tasks after",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"date\" : \"2022-10-09T22:32:00+03:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostport}}/get_tasks_after",
+					"host": [
+						"{{hostport}}"
+					],
+					"path": [
+						"get_tasks_after"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "hostport",
+			"value": "localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "test_login",
+			"value": "\"test\"",
+			"type": "string"
+		},
+		{
+			"key": "test_pass",
+			"value": "\"password\"",
+			"type": "string"
+		}
+	]
+}

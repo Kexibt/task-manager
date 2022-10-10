@@ -1,4 +1,4 @@
-host: localhost
+host: 0.0.0.0
 port: 8000
 timeout_conn_psql: 5s
-connection_psql: postgres://postgres:postgrespw@0.0.0.0:5432/task_manager
+connection_psql: postgres://postgres:postgrespw@postgres:5432/task_manager

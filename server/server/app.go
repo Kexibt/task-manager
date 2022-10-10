@@ -28,10 +28,12 @@ func NewApp() *App {
 	ctx, cancel := context.WithTimeout(context.Background(), cfg.GetConnectionTimeout())
 	defer cancel()
 
+	log.Printf("Starting connection to psql: %s\n", cfg.StringConnPsql)
 	db, err := connect(ctx, cfg.GetConnectionString())
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("\n\n", err, "\n\n")
 	}
+	log.Println("Connection to psql established")
 
 	task := taskhttp.NewHandler(db)
 

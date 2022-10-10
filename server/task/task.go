@@ -95,13 +95,13 @@ func (t *TasksRepository) GetTask(user *models.User, taskID int) (*models.Task, 
 }
 
 func (t *TasksRepository) GetTasks(user *models.User) ([]*models.Task, error) {
-	tsks0, err := t.Localstore.GetTasks(user)
-	if err != nil {
-	} // always nil, might be changed
+	tsks0, _ := t.Localstore.GetTasks(user)
+	// if err != nil {
+	// } // always nil, might be changed
 
-	tsks1, err := t.Database.GetTasks(user)
-	if err != nil {
-	} // always nil, might be changed
+	tsks1, _ := t.Database.GetTasks(user)
+	// if err != nil {
+	// } // always nil, might be changed
 
 	if len(tsks0) == len(tsks1) {
 		return tsks0, nil
@@ -116,13 +116,13 @@ func (t *TasksRepository) GetTasks(user *models.User) ([]*models.Task, error) {
 }
 
 func (t *TasksRepository) GetTasksAfter(user *models.User, date time.Time) ([]*models.Task, error) {
-	tsks0, err := t.Localstore.GetTasksAfter(user, date)
-	if err != nil {
-	} // always nil, might be changed
+	tsks0, _ := t.Localstore.GetTasksAfter(user, date)
+	// if err != nil {
+	// } // always nil, might be changed
 
-	tsks1, err := t.Database.GetTasksAfter(user, date)
-	if err != nil {
-	} // always nil, might be changed
+	tsks1, _ := t.Database.GetTasksAfter(user, date)
+	// if err != nil {
+	// } // always nil, might be changed
 
 	if len(tsks0) == len(tsks1) {
 		return tsks0, nil
