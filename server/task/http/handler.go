@@ -66,6 +66,83 @@ func (c *Handler) CreateTask(w http.ResponseWriter, r *http.Request, user *model
 	sendResult(w, fmt.Sprintf("successfully added, id: %d", modelsTask.ID))
 }
 
+type editInput struct {
+	ID          int    `json:"id"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	Status      string `json:"status"`
+	UserID      string `json:"new owner"`
+}
+
+func (e *editInput) convertToModelsTask() *models.Task {
+	return &models.Task{
+		Title:       e.Title,
+		Description: e.Description,
+		Status:      e.Status,
+		UserID:      e.UserID,
+	}
+}
+
+func (c *Handler) EditTask(w http.ResponseWriter, r *http.Request, user *models.User) {
+	b, err := io.ReadAll(r.Body)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	defer r.Body.Close()
+
+	tsk := &editInput{}
+	err = json.Unmarshal(b, tsk)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		err = sendErr(w, err)
+		if err != nil {
+			log.Println(err)
+		}
+		return
+	}
+
+	err = c.tasksRepository.EditTask(user, tsk.convertToModelsTask(), tsk.ID)
+	if err != nil {
+		sendErr(w, err)
+		return
+	}
+
+	sendResult(w, fmt.Sprintf("successfully edited, id: %d", tsk.ID))
+}
+
+type deleteInput struct {
+	ID int `json:"id"`
+}
+
+func (c *Handler) DeleteTask(w http.ResponseWriter, r *http.Request, user *models.User) {
+	b, err := io.ReadAll(r.Body)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	defer r.Body.Close()
+
+	tsk := &deleteInput{}
+	err = json.Unmarshal(b, tsk)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		err = sendErr(w, err)
+		if err != nil {
+			log.Println(err)
+		}
+		return
+	}
+
+	err = c.tasksRepository.DeleteTask(user, tsk.ID)
+	if err != nil {
+		sendErr(w, err)
+		return
+	}
+
+	sendResult(w, "successfully deleted")
+}
+
 type getInput struct {
 	ID int `json:"id"`
 }

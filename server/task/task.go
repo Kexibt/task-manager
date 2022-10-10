@@ -36,19 +36,41 @@ func (t *TasksRepository) CreateTask(user *models.User, tsk *models.Task) error 
 }
 
 func (t *TasksRepository) EditTask(user *models.User, newTsk *models.Task, oldID int) error {
-	err := t.Database.EditTask(user, newTsk, oldID)
+	original, err := t.GetTask(user, oldID)
 	if err != nil {
 		return err
 	}
 
-	err = t.Localstore.EditTask(user, newTsk, oldID)
+	changeOrigin(newTsk, original)
+	err = t.Database.EditTask(user, original, oldID)
+	if err != nil {
+		return err
+	}
+
+	err = t.Localstore.EditTask(user, original, oldID)
 	if errors.Is(err, localstore.ErrTaskNotFound) {
-		err = t.Localstore.CreateTask(user, newTsk)
+		err = t.Localstore.CreateTask(user, original)
 		if err != nil {
 			return err
 		}
 	}
-	return nil
+
+	return err
+}
+
+func changeOrigin(left, right *models.Task) {
+	if left.Title != "" {
+		right.Title = left.Title
+	}
+	if left.Description != "" {
+		right.Description = left.Description
+	}
+	if left.Status != "" {
+		right.Status = left.Status
+	}
+	if left.UserID != "" {
+		right.UserID = left.UserID
+	}
 }
 
 func (t *TasksRepository) DeleteTask(user *models.User, id int) error {

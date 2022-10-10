@@ -88,7 +88,6 @@ func (t *TaskRepository) EditTask(user *models.User, newTsk *models.Task, oldID 
 		tr.Rollback(context.Background())
 		return err
 	}
-
 	rows.Close()
 	tr.Commit(context.Background())
 

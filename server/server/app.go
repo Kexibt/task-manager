@@ -35,21 +35,16 @@ func NewApp() *App {
 
 	task := taskhttp.NewHandler(db)
 
-	// fmt.Println(
-	// 	task != nil,
-	// 	task.Database != nil,
-	// 	task.Localstore != nil,
-	// )
-
 	auth := authhttp.NewAuth(db)
 	auth.AddNewMiddlewaredHandler("/create_task", task.CreateTask)
+	auth.AddNewMiddlewaredHandler("/edit_task", task.EditTask)
+	auth.AddNewMiddlewaredHandler("/delete_task", task.DeleteTask)
 	auth.AddNewMiddlewaredHandler("/get_task", task.GetTask)
 	auth.AddNewMiddlewaredHandler("/get_tasks", task.GetTasks)
 	auth.AddNewMiddlewaredHandler("/get_tasks_after", task.GetTasksAfter)
 
 	mux := http.NewServeMux()
 	auth.AddHandlers(mux)
-	// tasks todo
 
 	return &App{
 		task: task,
