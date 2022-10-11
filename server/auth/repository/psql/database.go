@@ -106,8 +106,8 @@ func (u *UserRepository) CheckUser(username, password string) (bool, error) {
 		return false, ErrUserNotFound
 	}
 
-	if user.Password == password {
-		return true, nil
+	if user.Password != password {
+		return false, ErrWrongPassword
 	}
 
 	return true, nil

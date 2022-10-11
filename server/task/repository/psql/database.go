@@ -24,6 +24,16 @@ func (t *TaskRepository) Close() {
 }
 
 func (t *TaskRepository) CreateTask(user *models.User, tsk *models.Task) error {
+	if tsk.Title == "" {
+		return ErrTitleRequired
+	}
+	if tsk.Status != "todo" &&
+		tsk.Status != "in progress" &&
+		tsk.Status != "done" &&
+		tsk.Status != "" {
+		return ErrInvalidStatus
+	}
+
 	tsk.UserID = user.Login
 
 	tr, err := t.conn.Begin(context.Background())
@@ -62,6 +72,10 @@ func (t *TaskRepository) CreateTask(user *models.User, tsk *models.Task) error {
 }
 
 func (t *TaskRepository) EditTask(user *models.User, newTsk *models.Task, oldID int) error {
+	if oldID == 0 {
+		return ErrIDRequired
+	}
+
 	tr, err := t.conn.Begin(context.Background())
 	if err != nil {
 		tr.Rollback(context.Background())
@@ -95,6 +109,10 @@ func (t *TaskRepository) EditTask(user *models.User, newTsk *models.Task, oldID 
 }
 
 func (t *TaskRepository) DeleteTask(user *models.User, id int) error {
+	if id == 0 {
+		return ErrIDRequired
+	}
+
 	tr, err := t.conn.Begin(context.Background())
 	if err != nil {
 		tr.Rollback(context.Background())
@@ -119,6 +137,10 @@ func (t *TaskRepository) DeleteTask(user *models.User, id int) error {
 }
 
 func (t *TaskRepository) GetTask(user *models.User, id int) (*models.Task, error) {
+	if id == 0 {
+		return nil, ErrIDRequired
+	}
+
 	tsk := &models.Task{}
 
 	tr, err := t.conn.Begin(context.Background())

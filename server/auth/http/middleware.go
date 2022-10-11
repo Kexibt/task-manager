@@ -13,7 +13,7 @@ type InternalHandler interface {
 func (a *Auth) MiddleAuth(w http.ResponseWriter, r *http.Request) {
 	tokenCookie, err := r.Cookie("token")
 	if err != nil {
-		sendErr(w, err)
+		sendErr(w, ErrAuthorization)
 		return
 	}
 

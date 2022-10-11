@@ -72,6 +72,7 @@ func (a *Auth) signIn(w http.ResponseWriter, r *http.Request) {
 	}
 	if !ok {
 		sendResult(w, "invalid login and password")
+		return
 	}
 
 	token, err := a.repository.CreateToken(user.convertToModelsUser())

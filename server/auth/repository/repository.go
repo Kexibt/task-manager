@@ -42,7 +42,7 @@ func (r *Repository) GetUserByToken(token string) (*models.User, error) {
 
 func (r *Repository) CreateUser(user *models.User) error {
 	h := sha256.New()
-	hashpass := hex.EncodeToString(h.Sum([]byte(user.Login)))
+	hashpass := hex.EncodeToString(h.Sum([]byte(user.Password))) // мда
 	user.Password = hashpass
 	return r.users.CreateUser(user)
 }

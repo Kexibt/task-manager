@@ -22,16 +22,19 @@ func (t *TaskLocalStorage) CreateTask(user *models.User, tsk *models.Task) error
 	t.mutex.Lock()
 	defer t.mutex.Unlock()
 
-	tsk.UserID = user.Login
-	if _, exists := t.tasks[tsk.ID]; exists {
-		return ErrTaskAlreadyExists
+	if tsk.Title == "" {
+		return ErrTitleRequired
 	}
-
 	if tsk.Status != "todo" &&
 		tsk.Status != "in progress" &&
 		tsk.Status != "done" &&
 		tsk.Status != "" {
 		return ErrInvalidStatus
+	}
+
+	tsk.UserID = user.Login
+	if _, exists := t.tasks[tsk.ID]; exists {
+		return ErrTaskAlreadyExists
 	}
 
 	tsk.UpdateDate = time.Now()
@@ -43,6 +46,10 @@ func (t *TaskLocalStorage) CreateTask(user *models.User, tsk *models.Task) error
 func (t *TaskLocalStorage) EditTask(user *models.User, newTsk *models.Task, oldID int) error {
 	t.mutex.Lock()
 	defer t.mutex.Unlock()
+
+	if oldID == 0 {
+		return ErrIDRequired
+	}
 
 	if _, exists := t.tasks[oldID]; !exists {
 		return ErrTaskNotFound
@@ -81,6 +88,10 @@ func (t *TaskLocalStorage) DeleteTask(user *models.User, id int) error {
 	t.mutex.Lock()
 	defer t.mutex.Unlock()
 
+	if id == 0 {
+		return ErrIDRequired
+	}
+
 	if _, exists := t.tasks[id]; !exists {
 		return ErrTaskNotFound
 	}
@@ -95,6 +106,10 @@ func (t *TaskLocalStorage) DeleteTask(user *models.User, id int) error {
 func (t *TaskLocalStorage) GetTask(user *models.User, taskID int) (*models.Task, error) {
 	t.mutex.RLock()
 	defer t.mutex.RUnlock()
+
+	if taskID == 0 {
+		return nil, ErrIDRequired
+	}
 
 	tsk, exists := t.tasks[taskID]
 	if !exists {

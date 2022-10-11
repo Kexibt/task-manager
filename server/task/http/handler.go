@@ -94,7 +94,6 @@ func (c *Handler) EditTask(w http.ResponseWriter, r *http.Request, user *models.
 	tsk := &editInput{}
 	err = json.Unmarshal(b, tsk)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
 		err = sendErr(w, err)
 		if err != nil {
 			log.Println(err)
@@ -217,7 +216,7 @@ func (c *Handler) GetTasksAfter(w http.ResponseWriter, r *http.Request, user *mo
 	input := &getInputDate{}
 	err = json.Unmarshal(b, input)
 	if err != nil {
-		err = sendErr(w, err)
+		err = sendErr(w, ErrInvalidFormat)
 		if err != nil {
 			log.Println(err)
 		}
